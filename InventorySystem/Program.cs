@@ -69,37 +69,95 @@ class Program
     
         _inventory.AddProduct(productName, productPrice, productQuantity);
     }
-        static void Main()
+
+    static void EditProduct()
+    {
+        bool editMode = true;
+        string productName = string.Empty;
+        while (editMode)
         {
-            
-            bool continueRunning = true;
-
-            while (continueRunning)
+            productName = ReadString("Enter the product name or cancel to exit edit mode: ");
+            if (productName.Equals("cancel", StringComparison.OrdinalIgnoreCase))
             {
-                PrintMenu();
-
-                if (!int.TryParse(Console.ReadLine(), out int option))
-                {
-                    Console.WriteLine("Unknown option");
-                }
-                else
-                {
-                    switch (option)
-                    {
-                        case 1:
-                            AddProduct();
-                            break;
-                        case 2:
-                            _inventory.ViewAllProducts();
-                            break;
-                        case 6:
-                            continueRunning = false;
-                            break;
-                        default:
-                            Console.WriteLine("Unknown option");
-                            break;
-                    }
-                } 
+                editMode = false;
+            }
+            else if (!_inventory.CheckIfProductExist(productName))
+            {
+                Console.WriteLine("Product doesn't exist!");
+            }
+            else
+            {
+                break;
             }
         }
+        while (editMode)
+        {
+            Console.Write("""
+                          1. Edit Price.
+                          2. Edit Quantity.
+                          3. Exit Edit Mode.
+                          Enter your option: 
+                          """);
+            if (!int.TryParse(Console.ReadLine(), out int editOption))
+            {
+                Console.WriteLine("Unknown option");
+            }
+            else
+            { 
+                switch (editOption)
+                {
+                    case 1:
+                        float productPrice = ReadFloat("Enter the product price: ",
+                            "Invalid price. Please enter a non-negative number.");
+                        _inventory.EditProductByName(productName, price: productPrice);
+                        break;
+                    case 2:
+                        int productQuantity = ReadInt("Enter the product quantity: ",
+                            "Invalid quantity. Please enter a non-negative integer.");
+                        _inventory.EditProductByName(productName, quantity: productQuantity);
+                        break;
+                    case 3: 
+                        editMode = false;
+                        break;
+                }
+            }
+        }
+    }
+
+    static void Main()
+    {
+            
+        bool continueRunning = true;
+
+        while (continueRunning)
+        {
+            PrintMenu();
+
+            if (!int.TryParse(Console.ReadLine(), out int option))
+            { 
+                Console.WriteLine("Unknown option");
+            }
+            else
+            {
+                switch (option)
+                {
+                    case 1:
+                        AddProduct();
+                        break;
+                    case 2: 
+                        _inventory.ViewAllProducts(); 
+                        break;
+                    case 3:
+                        EditProduct(); 
+                        break;
+                    case 6: 
+                        continueRunning = false;
+                        break;
+                    default: 
+                        Console.WriteLine("Unknown option"); 
+                        break;
+                }
+            } 
+        }
+    }
 }

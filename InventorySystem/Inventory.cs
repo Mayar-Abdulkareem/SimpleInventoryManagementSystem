@@ -23,4 +23,50 @@ public class Inventory
             product.ShowProductInfo();
         }
     }
+    
+    public void EditProductByName(string name, float? price = null, int? quantity = null)
+    {
+        Product? productToEdit = null;
+
+        foreach (Product product in _products)
+        {
+            if (product.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                productToEdit = product;
+                break; 
+            }
+        }
+
+        if (productToEdit != null)
+        {
+            if (price.HasValue)
+            {
+                productToEdit.Price = price.Value; 
+            }
+
+            if (quantity.HasValue)
+            {
+                productToEdit.Quantity = quantity.Value;
+            }
+
+            Console.WriteLine($"Product '{name}' updated successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Product not found.");
+        }
+    }
+
+    public bool CheckIfProductExist(string name)
+    {
+        foreach (Product product in _products)
+        {
+            if (product.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+                break; 
+            }
+        }
+        return false;
+    }
 }
