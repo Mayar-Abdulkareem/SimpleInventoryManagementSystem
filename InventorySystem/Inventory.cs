@@ -57,16 +57,29 @@ public class Inventory
         }
     }
 
-    public bool CheckIfProductExist(string name)
+    public int CheckIfProductExist(string name)
     {
-        foreach (Product product in _products)
+        for (int index = 0; index < _products.Count; index++)
         {
-            if (product.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+            if (_products[index].Name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
-                return true;
-                break; 
+                return index; 
             }
         }
-        return false;
+        return -1; 
+    }
+
+    public void DeleteProduct(string name)
+    {
+        int index = CheckIfProductExist(name);
+        if (index  != -1)
+        {
+            _products.RemoveAt(index);
+            Console.WriteLine($"Product {name} deleted successfully");
+        }
+        else
+        {
+            Console.WriteLine("Product not found.");
+        }
     }
 }

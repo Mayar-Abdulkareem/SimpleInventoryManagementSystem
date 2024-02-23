@@ -81,7 +81,7 @@ class Program
             {
                 editMode = false;
             }
-            else if (!_inventory.CheckIfProductExist(productName))
+            else if (_inventory.CheckIfProductExist(productName) == -1)
             {
                 Console.WriteLine("Product doesn't exist!");
             }
@@ -149,6 +149,10 @@ class Program
                         break;
                     case 3:
                         EditProduct(); 
+                        break;
+                    case 4:
+                        string productName = ReadString("Enter the product name: ");
+                        _inventory.DeleteProduct(productName);
                         break;
                     case 6: 
                         continueRunning = false;
