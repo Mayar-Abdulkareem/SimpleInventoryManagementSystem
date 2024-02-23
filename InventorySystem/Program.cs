@@ -154,6 +154,10 @@ class Program
                         string productName = ReadString("Enter the product name: ");
                         _inventory.DeleteProduct(productName);
                         break;
+                    case 5:
+                        productName = ReadString("Enter the product name: ");
+                        _inventory.SearchProduct(productName);
+                        break;
                     case 6: 
                         continueRunning = false;
                         break;

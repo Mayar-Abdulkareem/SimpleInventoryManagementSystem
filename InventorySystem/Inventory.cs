@@ -82,4 +82,18 @@ public class Inventory
             Console.WriteLine("Product not found.");
         }
     }
+    
+    public void SearchProduct(string name)
+    {
+        int index = CheckIfProductExist(name);
+
+        if (index != -1)
+        {
+            _products.ElementAt(index).ShowProductInfo();
+        }
+        else
+        {
+            Console.WriteLine("Product not found.");
+        }
+    }
 }
