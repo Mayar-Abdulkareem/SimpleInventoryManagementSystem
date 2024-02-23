@@ -28,6 +28,6 @@ public class Product
 
     public void ShowProductInfo()
     {
-        Console.WriteLine($"Product name: {Name}\nProduct price: {Price}\nProduct Quantity: {Quantity}");
+        Console.WriteLine($"Product name: {Name}, Product price: {Price}, Product Quantity: {Quantity}");
     }
 }

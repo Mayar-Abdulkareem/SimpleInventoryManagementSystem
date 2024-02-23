@@ -10,4 +10,17 @@ public class Inventory
         _products.Add(product);
         Console.WriteLine($"Product {name} added successfully");
     }
+
+    public void ViewAllProducts()
+    {
+        if (_products.Count == 0)
+        {
+            Console.WriteLine("No products in inventory");
+        }
+        
+        foreach (var product in _products)
+        {
+            product.ShowProductInfo();
+        }
+    }
 }

@@ -89,6 +89,9 @@ class Program
                         case 1:
                             AddProduct();
                             break;
+                        case 2:
+                            _inventory.ViewAllProducts();
+                            break;
                         case 6:
                             continueRunning = false;
                             break;
