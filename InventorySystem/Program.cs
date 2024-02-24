@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 namespace InventorySystem;
+using static ConsoleHelper;
 
 class Program
 {
@@ -21,44 +22,6 @@ class Program
                           ****************************
                           Select an option: 
                           """);
-    }
-    
-    static int ReadInt(string prompt, string errorMessage)
-    {
-        int value;
-        bool isValid;
-        do
-        {
-            Console.Write(prompt);
-            isValid = int.TryParse(Console.ReadLine(), out value);
-            if (!isValid || value < 0)
-            {
-                Console.WriteLine(errorMessage);
-            }
-        } while (!isValid || value < 0);
-        return value;
-    }
-    
-    static float ReadFloat(string prompt, string errorMessage)
-    {
-        float value;
-        bool isValid;
-        do
-        {
-            Console.Write(prompt);
-            isValid = float.TryParse(Console.ReadLine(), out value);
-            if (!isValid || value < 0)
-            {
-                Console.WriteLine(errorMessage);
-            }
-        } while (!isValid || value < 0);
-        return value;
-    }
-    
-    static string ReadString(string prompt)
-    {
-        Console.Write(prompt);
-        return Console.ReadLine();
     }
     
     static void AddProduct()
@@ -103,20 +66,21 @@ class Program
                 Console.WriteLine("Unknown option");
             }
             else
-            { 
-                switch (editOption)
+            {
+                EditOptions option = (EditOptions)editOption;
+                switch (option)
                 {
-                    case 1:
+                    case EditOptions.EditPrice:
                         float productPrice = ReadFloat("Enter the product price: ",
                             "Invalid price. Please enter a non-negative number.");
                         _inventory.EditProductByName(productName, price: productPrice);
                         break;
-                    case 2:
+                    case EditOptions.EditQuantity:
                         int productQuantity = ReadInt("Enter the product quantity: ",
                             "Invalid quantity. Please enter a non-negative integer.");
                         _inventory.EditProductByName(productName, quantity: productQuantity);
                         break;
-                    case 3: 
+                    case EditOptions.Exit: 
                         editMode = false;
                         break;
                 }
@@ -133,32 +97,34 @@ class Program
         {
             PrintMenu();
 
-            if (!int.TryParse(Console.ReadLine(), out int option))
+            if (!int.TryParse(Console.ReadLine(), out int optionInput))
             { 
                 Console.WriteLine("Unknown option");
             }
             else
             {
+                MenuOptions option = (MenuOptions)optionInput;
+                
                 switch (option)
                 {
-                    case 1:
+                    case MenuOptions.AddProduct:
                         AddProduct();
                         break;
-                    case 2: 
+                    case MenuOptions.ViewAllProducts: 
                         _inventory.ViewAllProducts(); 
                         break;
-                    case 3:
+                    case MenuOptions.EditProduct:
                         EditProduct(); 
                         break;
-                    case 4:
+                    case MenuOptions.DeleteProduct:
                         string productName = ReadString("Enter the product name: ");
                         _inventory.DeleteProduct(productName);
                         break;
-                    case 5:
+                    case MenuOptions.SearchProduct:
                         productName = ReadString("Enter the product name: ");
                         _inventory.SearchProduct(productName);
                         break;
-                    case 6: 
+                    case MenuOptions.Exit: 
                         continueRunning = false;
                         break;
                     default: 
